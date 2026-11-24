@@ -25,8 +25,12 @@
   <div class="box gift">
     <p>Your first book's print files are free with the code</p>
     <p class="code" id="code">FIRSTBOOKFREE</p>
-    <a class="badge" id="redeem" href="https://apps.apple.com/redeem?ctx=offercodes&amp;id=6833502306&amp;code=FIRSTBOOKFREE">Get it free on the App Store</a>
-    <p class="note">On your iPhone: the App Store opens with the code filled in. Printing and delivery are paid to the printer.</p>
+    <!-- Until launch (decision 98): "Coming soon". On launch day, once FIRSTBOOKFREE exists in App Store Connect, remove
+         the "soon" lines and un-comment the redeem button (docs/launch-plan.md, launch-day checklist). -->
+    <span class="badge soon">Coming soon to the App Store</span>
+    <p class="note">Keep the code: it works once the app is in the App Store. Printing and delivery are paid to the printer.</p>
+    <!-- <a class="badge" id="redeem" href="https://apps.apple.com/redeem?ctx=offercodes&amp;id=6833502306&amp;code=FIRSTBOOKFREE">Redeem the code in the App Store</a>
+    <p class="note">On your iPhone: the App Store opens with the code filled in. Printing and delivery are paid to the printer.</p> -->
   </div>
 
   <div class="shots">
@@ -50,7 +54,8 @@
   const given = new URLSearchParams(location.search).get('code');
   if (given && /^[A-Za-z0-9-]{1,64}$/.test(given)) {
     document.getElementById('code').textContent = given;
-    document.getElementById('redeem').href = 'https://apps.apple.com/redeem?ctx=offercodes&id=6833502306&code=' + encodeURIComponent(given);
+    const redeem = document.getElementById('redeem');
+    if (redeem) redeem.href = 'https://apps.apple.com/redeem?ctx=offercodes&id=6833502306&code=' + encodeURIComponent(given);
   }
 </script>
 </body>
