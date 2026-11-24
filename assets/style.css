@@ -48,3 +48,12 @@ li { margin-bottom: 6px; }
 
 footer { border-top: 1px solid var(--line); margin-top: 56px; padding-top: 20px; padding-bottom: 40px; color: var(--muted); font-size: 15px; }
 footer nav a { margin-right: 18px; }
+
+/* Book pictures and the gift page (decision 96). */
+.badge.secondary { background: var(--lavender); color: var(--violet); margin-left: 8px; }
+.shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 8px 0 28px; }
+.shots img { width: 100%; height: auto; border-radius: 16px; display: block; }
+@media (max-width: 520px) { .shots { grid-template-columns: 1fr 1fr; } .shots img:nth-child(3) { display: none; } }
+.gift { text-align: center; padding: 18px; }
+.gift .code { font-weight: 800; font-size: 26px; letter-spacing: 0.08em; color: var(--violet); margin: 4px 0 8px; }
+.gift .note { color: var(--muted); font-size: 15px; }

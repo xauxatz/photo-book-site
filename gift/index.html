@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A photo book for you: AI Photo Book</title>
+<meta name="description" content="Someone gave you a photo book. Make your own: AI Photo Book finds the trips in your iPhone's photos and lays out a book ready to print.">
+<meta name="apple-itunes-app" content="app-id=6833502306">
+<meta property="og:title" content="Make your own photo book">
+<meta property="og:description" content="AI Photo Book finds the trips in your iPhone's photos and lays out a book ready to print.">
+<meta property="og:image" content="https://photo-book.ai/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon-180.png">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<!-- The page the QR code on a book's back cover opens (decision 96, virality review 2026-11-23). The code comes in the
+     address (?code=…); nothing is stored or sent. -->
+<header><a href="/"><img src="/assets/logo-horizontal-color.svg" alt="AI Photo Book"></a></header>
+<main>
+  <h1>Make your own photo book</h1>
+  <p class="lead">The book in your hands was made with AI Photo Book. It finds the trips in your iPhone's photos, picks the best shots and lays out the pages, ready to print.</p>
+
+  <div class="box gift">
+    <p>Your first book's print files are free with the code</p>
+    <p class="code" id="code">FIRSTBOOKFREE</p>
+    <a class="badge" id="redeem" href="https://apps.apple.com/redeem?ctx=offercodes&amp;id=6833502306&amp;code=FIRSTBOOKFREE">Get it free on the App Store</a>
+    <p class="note">On your iPhone: the App Store opens with the code filled in. Printing and delivery are paid to the printer.</p>
+  </div>
+
+  <div class="shots">
+    <img src="/assets/shots/01.jpg" width="600" height="1304" alt="The trips the app found in the photos, each with its dates and number of photos">
+    <img src="/assets/shots/02.jpg" width="600" height="1304" alt="Home: the best trip, ready to become a book">
+    <img src="/assets/shots/03.jpg" width="600" height="1304" alt="A laid-out book of Milano, with a menu to change a photo">
+  </div>
+
+  <ul class="points">
+    <li><strong>Finds your trips by itself</strong>A weekend away, a summer by the sea, a birthday: grouped from your photos' dates and places.</li>
+    <li><strong>Picks the best photos</strong>Near-duplicates, blurry shots and screenshots are left out.</li>
+    <li><strong>Nothing is uploaded</strong>Your photos stay on your iPhone. No account, no tracking, no ads.</li>
+  </ul>
+</main>
+<footer>
+  <nav><a href="/">About the app</a><a href="/support/">Support</a><a href="/privacy/">Privacy</a></nav>
+  <p>© 2026 Danger Island ApS, Denmark</p>
+</footer>
+<script>
+  // The code from the QR (?code=…), letters, digits and dashes only; else the shared code printed on every book.
+  const given = new URLSearchParams(location.search).get('code');
+  if (given && /^[A-Za-z0-9-]{1,64}$/.test(given)) {
+    document.getElementById('code').textContent = given;
+    document.getElementById('redeem').href = 'https://apps.apple.com/redeem?ctx=offercodes&id=6833502306&code=' + encodeURIComponent(given);
+  }
+</script>
+</body>
+</html>
