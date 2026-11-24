@@ -81,7 +81,13 @@
       note.textContent = `Shared privately. This link stops working on ${new Date(d.expiresAt).toLocaleDateString()}.`;
       show();
     })
-    .catch(() => { note.textContent = 'This book is no longer shared.'; img.hidden = true; document.querySelector('nav').hidden = true; });
+    // Gone (404) or not reachable: said differently, so a live link isn't called "no longer shared" (phone test
+    // 2026-11-24).
+    .catch((status) => {
+      note.textContent = status === 404 ? 'This book is no longer shared.' : 'The book couldn’t be loaded. Check the connection and try again.';
+      img.hidden = true;
+      document.querySelector('nav').hidden = true;
+    });
 </script>
 </body>
 </html>
