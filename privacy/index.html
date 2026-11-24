@@ -13,10 +13,10 @@
 <body>
 <header><a href="/"><img src="/assets/logo-horizontal-color.svg" alt="AI Photo Book"></a></header>
 <main>
-  <!-- Source: docs/privacy-policy-draft.md in the app repository (decision 51). Milestone 4's sections are added when
-       they ship. -->
+  <!-- Source: docs/privacy-policy-draft.md in the app repository (decision 51). Flip-through links added 2026-11-24
+       (decision 114); email and rewards aren't live. -->
   <h1>Privacy policy</h1>
-  <p class="updated">Last updated: 22 November 2026</p>
+  <p class="updated">Last updated: 24 November 2026</p>
   <p>AI Photo Book is made by <strong>Danger Island ApS</strong>, Th. Staunings Vej 48, 9210 Aalborg SØ, Denmark,
     CVR 32556736 ("we"). Questions about privacy: <a href="mailto:info@photo-book.ai">info@photo-book.ai</a>.</p>
 
@@ -24,7 +24,8 @@
     <h2>The short version</h2>
     <ul>
       <li><strong>Your photos stay on your iPhone.</strong> The app finds trips, picks photos and lays out your book on
-        the phone. We never receive your photos, thumbnails or anything the app works out about them.</li>
+        the phone. We never receive your photos, thumbnails or anything the app works out about them. The one
+        exception is a book you choose to share as a flip-through link: its pages, for 30 days (section 7).</li>
       <li><strong>No account, no tracking, no analytics, no ads.</strong> The app works without signing up.</li>
       <li>The few things that do leave the phone are listed below, each with what is sent, to whom and why.</li>
     </ul>
@@ -71,6 +72,24 @@
   <h3>6. Notifications</h3>
   <p>If you allow them, notifications ("Your Lisbon trip is ready") are created on your iPhone. There is no
     notification server, and nothing is sent.</p>
+
+  <h3>7. Flip-through links (only if you share one)</h3>
+  <p>This is the only feature where pictures leave your iPhone, and only when you ask for a link for a particular book
+    and say yes to what is uploaded.</p>
+  <ul>
+    <li><strong>What is uploaded:</strong> the book’s pages as images about 1600 pixels wide, without the photos’
+      location data. Not your photo library, not the original photos, and not the print file.</li>
+    <li><strong>Who can see them:</strong> anyone who has the link. The link is long and random, isn’t listed or indexed
+      anywhere, and works only until it expires.</li>
+    <li><strong>How long:</strong> <strong>30 days</strong>, then the pages are deleted from our server. You can delete the
+      link earlier from the book.</li>
+    <li><strong>Where:</strong> our storage in the EU (Supabase, Frankfurt). <em>Recipient:</em> Supabase, as our
+      processor.</li>
+    <li><strong>Limits against misuse:</strong> to limit how many links one connection can make, the server keeps a
+      scrambled form of the connection’s IP address (a one-way hash, never the address itself) for two days.</li>
+  </ul>
+  <p>The legal basis is your consent, given in the app for each link (GDPR Art. 6(1)(a)); you withdraw it by deleting
+    the link.</p>
 
   <h2>What we don't do</h2>
   <p>No advertising, no selling or sharing of data with advertisers or data brokers, no tracking across apps or
