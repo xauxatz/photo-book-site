@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Unlisted: never indexed (decision 25). -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>A photo book shared with you</title>
+  <!-- Safari's App Store banner (virality review 2026-11-23). -->
+  <meta name="apple-itunes-app" content="app-id=6833502306">
+  <!-- The preview in Messages and elsewhere: the same for every book (the book's id is after #, never sent). -->
+  <meta property="og:title" content="A photo book shared with you">
+  <meta property="og:description" content="Turn the pages. Made with AI Photo Book: your trips, made into books.">
+  <meta property="og:image" content="https://photo-book.ai/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    :root { --ink: #17142B; --violet: #5B3FE0; --paper: #F4F2FC; --lavender: #E4DEFF; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, "Plus Jakarta Sans", system-ui, sans-serif; color: var(--ink); background: var(--paper); }
+    main { max-width: 900px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 16px; min-height: 100vh; }
+    #page { width: 100%; max-height: 70vh; object-fit: contain; background: #fff; box-shadow: 0 4px 24px rgba(23, 20, 43, .15); border-radius: 4px; touch-action: pan-y; }
+    nav { display: flex; gap: 12px; align-items: center; }
+    button, a.cta { min-height: 44px; min-width: 44px; padding: 0 18px; border: 0; border-radius: 22px; background: var(--violet); color: #fff; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+    button:disabled { opacity: .4; }
+    .muted { color: #5C5873; font-size: 14px; text-align: center; margin: 0; }
+    .made { width: 100%; max-width: 520px; background: var(--lavender); border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+    .made strong { font-size: 16px; }
+  </style>
+</head>
+<body>
+<main>
+  <img id="page" alt="">
+  <nav>
+    <button id="prev" aria-label="Previous page">‹</button>
+    <span id="count" aria-live="polite"></span>
+    <button id="next" aria-label="Next page">›</button>
+  </nav>
+  <p class="muted" id="note"></p>
+  <!-- On every page and on an expired link (virality review 2026-11-23: only the last page had it, with a placeholder id). -->
+  <section class="made">
+    <strong>Made with AI Photo Book</strong>
+    <span class="muted">It finds the trips in your iPhone's photos and makes them into a book. Your first book's print files are free with code FIRSTBOOKFREE.</span>
+    <!-- ct: Apple's campaign token, so App Store Connect counts installs from here; add &pt=<provider token> with the app's. -->
+    <a class="cta" id="cta" href="https://apps.apple.com/app/id6833502306?ct=flipbook">Make your own photo book</a>
+  </section>
+</main>
+<script>
+  // The flip-through viewer (decision 50). The link is .../view#<id>: the id never reaches the web server's logs.
+  // The flipbook Edge Function of the app's Supabase project (Frankfurt; decision 114). Not a secret: the app uses it too.
+  const FUNCTION_URL = 'https://hijafokuvroaxuogccpx.supabase.co/functions/v1/flipbook';
+  const id = location.hash.slice(1);
+  const img = document.getElementById('page'), count = document.getElementById('count'), note = document.getElementById('note');
+  let pages = [], at = 0;
+  function show() {
+    img.src = pages[at];
+    img.alt = `Page ${at + 1} of ${pages.length}`;
+    count.textContent = `${at + 1} / ${pages.length}`;
+    document.getElementById('prev').disabled = at === 0;
+    document.getElementById('next').disabled = at === pages.length - 1;
+    if (pages[at + 1]) new Image().src = pages[at + 1];
+  }
+  const go = (step) => { const to = at + step; if (to >= 0 && to < pages.length) { at = to; show(); } };
+  document.getElementById('prev').onclick = () => go(-1);
+  document.getElementById('next').onclick = () => go(1);
+  document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') go(1); if (e.key === 'ArrowLeft') go(-1); });
+  // Swipe to turn the page on a phone.
+  let startX = null;
+  img.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+  img.addEventListener('touchend', (e) => {
+    if (startX == null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    startX = null;
+    if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+  });
+  fetch(`${FUNCTION_URL}?id=${encodeURIComponent(id)}`)
+    .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+    .then((d) => {
+      pages = d.pages;
+      note.textContent = `Shared privately. This link stops working on ${new Date(d.expiresAt).toLocaleDateString()}.`;
+      show();
+    })
+    .catch(() => { note.textContent = 'This book is no longer shared.'; img.hidden = true; document.querySelector('nav').hidden = true; });
+</script>
+</body>
+</html>
